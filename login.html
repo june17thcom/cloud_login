@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인</title>
+  </head>
+  <body>
+    <h2>로그인</h2>
+    <p>아이디: <input type="text" name="userid" id="userid" /></p>
+    <p>비번: <input type="text" name="userpw" id="userpw" /></p>
+    <p><button id="login_btn">로그인</button></p>
+    <script>
+      const btn = document.getElementById("login_btn");
+      btn.addEventListener("click", () => {
+        const userid = document.getElementById("userid").value;
+        const userpw = document.getElementById("userpw").value;
+        fetch(`http://127.0.0.1:3000/login?userid=${userid}&{userpw}=${userpw}`)
+          .then((res) => {
+            res.text();
+            location.href = "http://127.0.0.1:3000/result.ejs";
+          })
+          .then((data) => {
+            console.log("서버 응답: " + data);
+          })
+          .catch((err) => {
+            console.log("에러 발생! ", err);
+          });
+      });
+    </script>
+  </body>
+</html>

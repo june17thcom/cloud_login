@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 성공</title>
+  </head>
+  <body>
+    <h2>환영합니다, <%=userid%>님!</h2>
+    <p><%=userid%>님의 비밀번호는 <%=userpw%>입니다. <br /></p>
+    <hr />
+    <p>
+      <a href="http://127.0.0.1:3000/login?userid=${userid}&{userpw}=${userpw}"
+        >새로 로그인하시겠습니까?</a
+      >
+    </p>
+  </body>
+</html>
