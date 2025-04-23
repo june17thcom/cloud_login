@@ -1,10 +1,17 @@
 import express from "express";
 import fs from "fs";
-//const fs = require("fs");
+import path from "path";
+import ejs from "ejs";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
-app.get("/", (req, res) => {
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+app.get("/", (req, res, next) => {
   fs.readFile("login.html", (err, data) => {
     if (err) {
       res.status(500);
@@ -13,22 +20,19 @@ app.get("/", (req, res) => {
     res.status(200).set({ "Content-Type": "text/html" });
     res.send(data);
   });
-});
-
-// http://127.0.0.1:5500/login?userid=apple&userpw=1234
-app.get("/login", (req, res) => {
   console.log(res.query);
   console.log("아이디: ", req.query.userid);
   console.log("비밀번호: ", req.query.userpw);
-  const filePath = path.join("result.ejs");
-  ejs.renderFile(filePath, { name: "김사과" }, (err, data) => {
-    if (err) {
-      res.writeHead(500, { "Content-Type": "text/plain" });
-      res.end("서버 오류");
-      return;
-    }
-    res.writeHead(200, { "Content-Type": "text/html" });
-  });
+  //next();
+});
+
+app.get("/login", (req, res) => {
+  const { userid, userpw } = req.query;
+
+  console.log("아이디:", userid);
+  console.log("비밀번호:", userpw);
+
+  res.render("result", { userid, userpw });
 });
 
 app.listen(3000, () => {
